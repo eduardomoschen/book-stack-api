@@ -14,6 +14,7 @@ class Book(models.Model):
     year_of_publication = YearField()
     publisher = models.CharField(max_length=255, blank=True, null=True)
     image = models.URLField()
+    available = models.BooleanField(default=True)
 
     def __str__(self):
         return self.title
