@@ -34,9 +34,10 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt',
     'phonenumber_field',
 
+    'authentication',
     'books',
-    'users',
     'library',
+    'users',
 ]
 
 MIDDLEWARE = [
