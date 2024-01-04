@@ -16,7 +16,7 @@ class BookBorrowingSerializer(serializers.ModelSerializer):
         book.save()
 
         return book_borrowing
-    
+
     def update(self, instance, validated_data):
         returned_borrowing = super().update(instance, validated_data)
         book = returned_borrowing.book

@@ -6,12 +6,12 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = (
-            'first_name', 
-            'last_name', 
-            'username', 
-            'email', 
-            'phone_number', 
-            # 'password',
+            'id',
+            'first_name',
+            'last_name',
+            'username',
+            'email',
+            'phone_number',
             'birth_date',
             'is_active',
             'is_staff',
@@ -24,6 +24,6 @@ class UserSerializer(serializers.ModelSerializer):
 
         if password:
             user.password = make_password(password)
-        
+
         user.save()
         return user
