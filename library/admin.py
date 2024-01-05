@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import BookBorrowing
+from .models import BookBorrowing, Notification
 
 @admin.register(BookBorrowing)
 class BookBorrowingAdmin(admin.ModelAdmin):
@@ -19,7 +19,12 @@ class BookBorrowingAdmin(admin.ModelAdmin):
                 book.save()
         else:
             book = obj.book
-            book.available = False  
+            book.available = False
             book.save()
 
         super().save_model(request, obj, form, change)
+
+
+@admin.register(Notification)
+class NotificationAdmin(admin.ModelAdmin):
+    ...
