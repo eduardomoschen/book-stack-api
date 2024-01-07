@@ -36,3 +36,30 @@ stipulated return date.',
                 [user_email],
                 fail_silently=False
             )
+
+@receiver(post_save, sender=BookBorrowing)
+def send_delay_notification(sender, instance, **kwargs):
+    if instance.returned is False and instance.due_date < timezone.now().date():
+        borrower = instance.borrower
+        book_title = instance.book.title
+        days_delayed = (timezone.now().date() - instance.due_date).days
+
+        user_email = borrower.email
+        username = borrower.username
+
+        Notification.objects.create(
+            user=borrower,
+            message=f'You have an overdue book ({book_title}).'
+        )
+
+        send_mail(
+            f'Delay Alert: Book "{book_title}" Return Overdue',
+            f'Hello, {username}.\n\n'
+            f'This is a notification that the book "{book_title}" is \
+{days_delayed} days overdue. '
+            f'Please return the book as soon as possible to avoid further \
+penalties.',
+            os.getenv('DEFAULT_FROM_EMAIL'),
+            [user_email],
+            fail_silently=False
+        )
