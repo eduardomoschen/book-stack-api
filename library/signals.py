@@ -63,3 +63,33 @@ penalties.',
             [user_email],
             fail_silently=False
         )
+
+@receiver(post_save, sender=BookBorrowing)
+def notify_waiting_list(sender, instance, **kwargs):
+    if instance.returned and instance.book.waiting_list.exists():
+        book = instance.book
+        user = book.waiting_list.first()
+        book.waiting_list.remove(user)
+
+        book.available = True
+        book.save()
+
+        book_title = book.title
+        user_email = user.email
+        username = user.username
+
+        Notification.objects.create(
+            user=user,
+            message=f'The book ({book_title}) is now available.'
+        )
+
+        send_mail(
+            f'Book "{book_title}" is now available',
+            f'Hello, {username}.\n\n'
+            f'The book "{book_title}" that you were waiting for is now \
+available.'
+            f'You can borrow it from the library.',
+            os.getenv('DEFAULT_FROM_EMAIL'),
+            [user_email],
+            fail_silently=False
+        )

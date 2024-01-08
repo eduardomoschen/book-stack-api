@@ -19,6 +19,7 @@ class Book(models.Model):
     publisher = models.CharField(max_length=255, blank=True, null=True)
     image = models.URLField()
     available = models.BooleanField(default=True)
+    waiting_list = models.ManyToManyField(User, blank=True)
 
     def __str__(self):
         return self.title

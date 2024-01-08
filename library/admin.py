@@ -8,14 +8,14 @@ class BookBorrowingAdmin(admin.ModelAdmin):
     def save_model(self, request, obj, form, change):
         super().save_model(request, obj, form, change)
 
-        if change:  # Atualização de BookBorrowing
+        if change:
             original_obj = BookBorrowing.objects.get(pk=obj.pk)
             original_returned = original_obj.returned
             new_returned = obj.returned
 
-            if original_returned and not new_returned:  # Verifica se o livro está sendo marcado como não devolvido
+            if original_returned and not new_returned:
                 book = obj.book
-                book.available = False  # Define o livro como indisponível ao ser emprestado
+                book.available = False
                 book.save()
         else:
             book = obj.book
