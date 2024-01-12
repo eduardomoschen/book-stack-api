@@ -4,10 +4,10 @@ from rest_framework import permissions
 class LibraryPermissionClass(permissions.BasePermission):
     def has_permission(self, request, view):
         if request.user.is_staff:
-            return True  # Admin tem acesso total
+            return True
         if request.method == 'POST':
-            return request.user.is_authenticated  # Apenas usuários autenticados podem criar empréstimos
-        return False  # Outras operações são negadas por padrão
+            return request.user.is_authenticated
+        return False
 
 
 class LibraryUserOwnerOrAdminPermissionClass(permissions.BasePermission):
