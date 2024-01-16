@@ -6,6 +6,9 @@ class BookPermissionClass(permissions.BasePermission):
     Classe de permissão personalizada para verificar se o usuário autenticado
     tem permissão.
 
+    Atributos:
+        Não há atributos nesta classe.
+
     Métodos:
         has_permission: Determina se o usuário autenticado tem permissão para
         realizer a ação.
