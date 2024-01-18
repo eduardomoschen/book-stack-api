@@ -8,6 +8,28 @@ User = get_user_model()
 
 
 class BookBorrowingSerializer(serializers.ModelSerializer):
+    """
+    Serializer para o model BookBorrowing.
+
+    Atributos:
+        - book: Campo de primary key relacionado ao model Book.
+
+    Métodos:
+        - validate_book: Valida se o livro esta'disponível e, caso contrário,
+        adiciona o usuário à lista de espera.
+        - create: Cria um novo empréstimo de livro e marca o livro como não
+        disponível.
+        - update: Atualiza o empréstimo do livro e marca o livro como
+        disponível se devolvido e atualiza a lista de espera.
+
+    Campos:
+        Todos os campos do model Book.
+
+    Nota:
+        O campo 'book' é read-only para eivtar que seja alterado durante a
+        criação ou atualização.
+    """
+
     book = serializers.PrimaryKeyRelatedField(queryset=Book.objects.all())
     class Meta:
         model = BookBorrowing
@@ -15,6 +37,14 @@ class BookBorrowingSerializer(serializers.ModelSerializer):
         read_only_fields = ('book',)
 
     def validate_book(self, value):
+        """
+        Valida se o livro está disponível e, caso contrário, adiciona o usuário
+        à lista de espera.
+
+        Caso o livro não esteja disponível, uma exceção será levantada
+        informando que o usuário foi adicionado à lista de espera.
+        """
+
         try:
             book = Book.objects.get(id=value.id)
             if not book.available:
@@ -41,6 +71,10 @@ to the waiting list.'
 
 
     def create(self, validated_data):
+        """
+        Cria um novo empréstimo de livro e marca o livro como não disponível.
+        """
+
         book = validated_data.get('book')
 
         if not book.available:
@@ -56,6 +90,11 @@ to the waiting list.'
         return book_borrowing
 
     def update(self, instance, validated_data):
+        """
+        Atualiza o empréstimo do livro e marca o livro como disponível quando
+        for devolvido e atualiza a lista de espera.
+        """
+
         returned_borrowing = super().update(instance, validated_data)
         book = returned_borrowing.book
 
