@@ -1,5 +1,4 @@
 from rest_framework import generics
-from rest_framework.permissions import IsAuthenticated
 from .models import BookBorrowing
 from .serializers import BookBorrowingSerializer
 from .permissions import (
@@ -9,12 +8,34 @@ from .permissions import (
 
 
 class BookBorrowingCreateListView(generics.ListCreateAPIView):
+    """
+    View para listar e realizar o empréstimo de livros.
+
+    Atributos:
+        - permission_classes: Lista de classes de permissão a serem vericadas.
+        - queryset: Conjunto de dados a ser utilizado pela view.
+        - serializer_class: Classe serializadora a ser utilizada para converter
+        os dados.
+    """
+
     permission_classes = (LibraryPermissionClass,)
     queryset = BookBorrowing.objects.all()
     serializer_class = BookBorrowingSerializer
 
 
 class BookBorrowingDetailView(generics.RetrieveUpdateDestroyAPIView):
+    """
+    View para visualizar, atualizar e excluir detalhes de um empréstimo
+    específico. Além disso, também é possível realizar a devolução do livro.
+
+    Atributos:
+        - permission_class: Lista de classes de permissão a serem verificadas.
+        - queryset: Conjunto de dados a ser utilizado pela view.
+        - serializer_class: Classe serializadora a ser utilizada para converter
+        os dados.
+        - lookup_field: Campo utilizado para identificar o emrpréstimo na URL.
+    """
+
     permission_classes = (LibraryUserOwnerOrAdminPermissionClass,)
     queryset = BookBorrowing.objects.all()
     serializer_class = BookBorrowingSerializer
