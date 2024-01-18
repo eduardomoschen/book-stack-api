@@ -12,6 +12,16 @@ load_dotenv()
 
 @receiver(post_save, sender=BookBorrowing)
 def send_return_notification(sender, instance, created, **kwargs):
+    """
+    Signal para enviar uma notificação e e-mail um dia antes da data de
+    devolução.
+
+    Cria uma notificação e envia um e-mail ao usuário que realizou o empréstimo
+    alertando sobre a devolução do livro um dia antes da data de devolução.
+
+    Este signal é adicionado sempre que um novo empréstimo de livro é criado.
+    """
+
     if created:
         one_day_before = instance.due_date - timedelta(days=1)
         if one_day_before == timezone.now().date():
@@ -39,6 +49,15 @@ stipulated return date.',
 
 @receiver(post_save, sender=BookBorrowing)
 def send_delay_notification(sender, instance, **kwargs):
+    """
+    Signal para enviar um notificação e e-mail se um livro estiver atrasado.
+
+    Cria uma notificação e envia um e-mail ao usuário que realizou o empréstimo
+    alertando a cada dia sobre o atraso na devolução do livro.
+
+    Este signal é acionado sempre que um novo empréstimo de livro é criado.
+    """
+
     if instance.returned is False and instance.due_date < timezone.now().date():
         borrower = instance.borrower
         book_title = instance.book.title
@@ -66,6 +85,16 @@ penalties.',
 
 @receiver(post_save, sender=BookBorrowing)
 def notify_waiting_list(sender, instance, **kwargs):
+    """
+    Signal para notificar a lista de espera quando um livro é devolvido.
+
+    Remove o primeiro usuário da lista de espera, marca o livro como disponível
+    e notifica o primeiro usuário da lista de espera sobre a disponibilidade do
+    livro.
+
+    Este signal é acionado sempre que um novo empréstimo de livro é criado.
+    """
+
     if instance.returned and instance.book.waiting_list.exists():
         book = instance.book
         user = book.waiting_list.first()
