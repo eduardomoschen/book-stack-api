@@ -25,6 +25,12 @@ class BookBorrowingAdmin(admin.ModelAdmin):
         Se o empréstimo for alterado e marcado como devolvido, o livro é
         marcado como disponível. Se um novo empréstimo for adicionado, o livro
         é marcado como não disponível.
+
+        Parâmetros:
+            - request: Objeto HttpRequest recebido durante a solicitação.
+            - obj: Instância do model BookBorrowing sendo salva.
+            - form: Formulário utilizado para editar o model BookBorrowing.
+            - change: Indica se é uma atualização de um empréstimo existente.
         """
 
         super().save_model(request, obj, form, change)
