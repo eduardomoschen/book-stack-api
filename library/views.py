@@ -16,6 +16,9 @@ class BookBorrowingCreateListView(generics.ListCreateAPIView):
         - queryset: Conjunto de dados a ser utilizado pela view.
         - serializer_class: Classe serializadora a ser utilizada para converter
         os dados.
+
+    Métodos:
+        - Não há métodos nesta classe.
     """
 
     permission_classes = (LibraryPermissionClass,)
@@ -34,6 +37,9 @@ class BookBorrowingDetailView(generics.RetrieveUpdateDestroyAPIView):
         - serializer_class: Classe serializadora a ser utilizada para converter
         os dados.
         - lookup_field: Campo utilizado para identificar o emrpréstimo na URL.
+
+    Métodos:
+        - Não há métodos nesta classe.
     """
 
     permission_classes = (LibraryUserOwnerOrAdminPermissionClass,)

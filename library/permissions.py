@@ -10,7 +10,7 @@ class LibraryPermissionClass(permissions.BasePermission):
         Não há atributos nesta classe.
 
     Métodos:
-        has_permission: Determina se o usuário autenticado tem permissão para
+        - has_permission: Determina se o usuário autenticado tem permissão para
         realizer a ação.
     """
 
@@ -19,8 +19,8 @@ class LibraryPermissionClass(permissions.BasePermission):
         Verifica se o usuário autenticado tem permissão para realizar a ação.
 
         Parâmetros:
-            request: O objeto da solicitação HTTP.
-            request: Instância da view associada à solicitação.
+            - request: O objeto da solicitação HTTP.
+            - view: Instância da view associada à solicitação.
 
         Retorna:
             - True se o usuário for um membro staff para todas as
@@ -45,7 +45,7 @@ class LibraryUserOwnerOrAdminPermissionClass(permissions.BasePermission):
         Não há atributos nesta classe.
 
     Métodos:
-        has_object_permission: Determina se o usuário autenticado é o
+        - has_object_permission: Determina se o usuário autenticado é o
         proprietário do empréstimo ou se é um membro staff.
     """
 
@@ -55,8 +55,8 @@ class LibraryUserOwnerOrAdminPermissionClass(permissions.BasePermission):
         é um membro staff.
 
         Parâmetros:
-            request: O objeto da solicitação HTTP.
-            view: Instância da view associada à solicitação.
+            - request: O objeto da solicitação HTTP.
+            - view: Instância da view associada à solicitação.
 
         Retorna:
             - True se o usuário autenticado for um membro staff ou se for dono

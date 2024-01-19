@@ -19,7 +19,7 @@ class BookBorrowing(models.Model):
         - date_delivered: A data que o livro foi entregue.
 
     Métodos:
-        __str__: Retorna uma representação em string do título do livro e do
+        - __str__: Retorna uma representação em string do título do livro e do
         usuário que realizou o empréstimo.
     """
 
@@ -46,7 +46,7 @@ class Notification(models.Model):
         - read: Campo booleano para informar se a mensagem foi lida ou não.
 
     Métodos:
-        __str__: Retorna uma representação em string informando o username e a
+        - __str__: Retorna uma representação em string informando o username e a
         mensagem enviada.
     """
 

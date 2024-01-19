@@ -15,7 +15,7 @@ class BookBorrowingSerializer(serializers.ModelSerializer):
         - book: Campo de primary key relacionado ao model Book.
 
     Métodos:
-        - validate_book: Valida se o livro esta'disponível e, caso contrário,
+        - validate_book: Valida se o livro está disponível e, caso contrário,
         adiciona o usuário à lista de espera.
         - create: Cria um novo empréstimo de livro e marca o livro como não
         disponível.
@@ -23,10 +23,10 @@ class BookBorrowingSerializer(serializers.ModelSerializer):
         disponível se devolvido e atualiza a lista de espera.
 
     Campos:
-        Todos os campos do model Book.
+        - Todos os campos do model Book.
 
     Nota:
-        O campo 'book' é read-only para eivtar que seja alterado durante a
+        - O campo 'book' é read-only para eivtar que seja alterado durante a
         criação ou atualização.
     """
 
